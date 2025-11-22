@@ -68,6 +68,11 @@ Frontend (React) -> FastAPI Backend -> OCR + LLM + CSV Matching
 
 **Python Version:** 3.10.x
 
+
+### Test Image
+A sample course-list image is included at `frontend/public/test-image.jpg` for quick testing.
+
+
 ### Backend
 
 ```bash
@@ -125,4 +130,5 @@ AI/ML Engineer
 GitHub: https://github.com/ChrisDevAI
 Website: https://ChrisAI.dev
 LinkedIn: https://linkedin.com/in/ChrisDevAI
+
 
