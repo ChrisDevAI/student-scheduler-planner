@@ -1,0 +1,5 @@
+# Disable detection for all files by default
+* linguist-detectable=false
+
+# Enable detection ONLY for Python source files
+*.py linguist-detectable=true
