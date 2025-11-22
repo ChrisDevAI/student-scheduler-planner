@@ -1,0 +1,29 @@
+course_code,course_name,section,days,time,context
+CAI1001C,Introduction to Computer Applications,001,MWF,09:00 AM-10:15 AM,Morning
+CAI1001C,Introduction to Computer Applications,002,TTh,10:30 AM-11:45 AM,Morning
+CAI1001C,Introduction to Computer Applications,003,TTh,01:00 PM-02:15 PM,Afternoon
+CAI1001C,Introduction to Computer Applications,004,MWF,02:30 PM-03:45 PM,Afternoon
+CAI2100C,Advanced Computer Applications,001,MWF,10:30 AM-11:45 AM,Morning
+CAI2100C,Advanced Computer Applications,002,TTh,09:00 AM-10:15 AM,Morning
+CAI2100C,Advanced Computer Applications,003,TTh,06:00 PM-07:15 PM,Evening
+CAP1788,Computer Programming Fundamentals,001,MWF,01:00 PM-02:15 PM,Afternoon
+CAP1788,Computer Programming Fundamentals,002,TTh,02:30 PM-03:45 PM,Afternoon
+CAP1788,Computer Programming Fundamentals,003,TTh,04:00 PM-05:15 PM,Evening
+CGS1060C,Introduction to Computers,001,MWF,09:00 AM-10:15 AM,Morning
+CGS1060C,Introduction to Computers,002,TTh,10:30 AM-11:45 AM,Morning
+CGS1060C,Introduction to Computers,003,TTh,01:00 PM-02:15 PM,Afternoon
+CGS1540C,Database Management,001,MWF,10:30 AM-11:45 AM,Morning
+CGS1540C,Database Management,002,TTh,09:00 AM-10:15 AM,Morning
+CGS1540C,Database Management,003,TTh,06:00 PM-07:15 PM,Evening
+COP2335,Programming in C++,001,MWF,01:00 PM-02:15 PM,Afternoon
+COP2335,Programming in C++,002,TTh,02:30 PM-03:45 PM,Afternoon
+COP2335,Programming in C++,003,TTh,04:00 PM-05:15 PM,Evening
+PHI2680,Ethics in Technology,001,MWF,09:00 AM-10:15 AM,Morning
+PHI2680,Ethics in Technology,002,TTh,10:30 AM-11:45 AM,Morning
+PHI2680,Ethics in Technology,003,TTh,01:00 PM-02:15 PM,Afternoon
+CTS1120,Computer Hardware and Software,001,MWF,10:30 AM-11:45 AM,Morning
+CTS1120,Computer Hardware and Software,002,TTh,09:00 AM-10:15 AM,Morning
+CTS1120,Computer Hardware and Software,003,TTh,06:00 PM-07:15 PM,Evening
+STA2023,Statistics,001,MWF,01:00 PM-02:15 PM,Afternoon
+STA2023,Statistics,002,TTh,02:30 PM-03:45 PM,Afternoon
+STA2023,Statistics,003,TTh,04:00 PM-05:15 PM,Evening 

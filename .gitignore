@@ -1,0 +1,76 @@
+##############################
+#   REACT FRONTEND
+##############################
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Local cache / tool junk
+.pnp/
+.pnp.js
+.npm/
+.npmrc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.eslintcache
+
+# Vite specific
+.vite/
+
+
+##############################
+#   PYTHON BACKEND
+##############################
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+
+
+##############################
+#   FASTAPI / PROJECT FILES
+##############################
+
+# Environment files (very important)
+.env
+.env.*
+
+# Local instance, SQLite, temp DBs
+instance/
+*.sqlite
+*.sqlite3
+*.db
+
+# Auto-generated image preview temp files (if any)
+*.png~
+*.tmp
+
+
+##############################
+#   EDITOR / TOOLING
+##############################
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
