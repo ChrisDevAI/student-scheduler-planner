@@ -1,6 +1,6 @@
 # 🏫 Student Schedule Planner
 
-![Hero Screenshot](screenshots/Hero.jpg)
+![Hero Screenshot](screenshots/hero.jpg)
 
 An AI-powered schedule-building system combining computer vision and an LLM-based assistant into a clean, modern interface that transforms an image of your course list into a personalized class schedule.
 
@@ -125,3 +125,4 @@ AI/ML Engineer
 GitHub: https://github.com/ChrisDevAI
 Website: https://ChrisAI.dev
 LinkedIn: https://linkedin.com/in/ChrisDevAI
+
