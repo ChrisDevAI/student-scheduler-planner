@@ -7,7 +7,7 @@ An AI-powered schedule-building system combining computer vision and an LLM-base
 This MVP demonstrates **full-stack engineering**, **OCR text extraction**, **LLM-driven parsing**, **CSV-based schedule matching**, and a **conversational planning assistant** — all presented through a custom-built React interface.
 
 ### 🔴 Live FRONTEND ONLY Demo  
-Coming Soon  
+Live FRONTEND ONLY Demo : https://student-schedule-planner-75ce2.web.app/ 
 (Backend functionality requires running locally.)
 
 ---
@@ -130,6 +130,7 @@ AI/ML Engineer
 GitHub: https://github.com/ChrisDevAI  
 Website: https://ChrisAI.dev  
 LinkedIn: https://linkedin.com/in/ChrisDevAI  
+
 
 
 
