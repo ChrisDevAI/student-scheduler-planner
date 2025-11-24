@@ -127,8 +127,6 @@ frontend/public/test-image.jpg
 ## License
 MIT License
 
-[⬆️ Back to Overview](#overview)
-
 ---
 
 ## Author
@@ -138,6 +136,7 @@ AI/ML Engineer
 GitHub: https://github.com/ChrisDevAI  
 Website: https://ChrisAI.dev  
 LinkedIn: https://linkedin.com/in/ChrisDevAI
+
 
 
 
