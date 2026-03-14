@@ -154,13 +154,13 @@ This architecture intentionally reserves the LLM for explanation only, while kee
 ---
 
 ## Why This Project Matters
-This project demonstrates more than just full-stack integration.
-It shows the ability to:
-- design an end-to-end pipeline
-- separate deterministic logic from LLM responsibilities
-- build resilient backend workflows
-- recover gracefully from external service failures
-- structure an MVP around correctness, maintainability, and explainability
+This project was designed to solve a real student workflow problem, not just serve as a technical demo.
+
+Building a class schedule from a course list can be slow, repetitive, and frustrating. Students often have to read course guides manually, identify valid courses, compare sections, and avoid time conflicts by hand. This project turns that process into a structured pipeline: OCR extracts text from an uploaded image, deterministic logic identifies valid course codes, and a rule-based scheduling engine builds a conflict-free schedule from a course catalog.
+
+This project also demonstrates practical engineering judgment. Instead of relying on an LLM for tasks that require correctness and control, the system uses deterministic logic for extraction, validation, and schedule construction, while reserving the LLM only for plain-English explanation. That makes the application more reliable, easier to debug, and more aligned with real-world software design.
+
+It also reflects the ability to identify and prototype a meaningful real-world use case: using AI and software engineering to reduce friction in a process students genuinely deal with. The underlying idea has real institutional value and could be expanded into a broader academic scheduling tool in the future.
 
 
 --- 
