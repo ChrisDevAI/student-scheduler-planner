@@ -129,18 +129,6 @@ This architecture intentionally reserves the LLM for explanation only, while kee
 - Deterministic scheduling engine
 - CSV-based synthetic course database
 
-### Architecture
-Image Upload
-   ↓
-OCR (Tesseract)
-   ↓
-Deterministic Course Code Extraction
-   ↓
-Student Course Selection
-   ↓
-Deterministic Conflict-Free Schedule Generation
-   ↓
-LLM Explanation Layer
 
 [⬆️ Back to Overview](#overview)
 
