@@ -1,14 +1,16 @@
+# main.py
+
 import os
-import io
 import csv
 import json
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List
 from openai import OpenAI
 
 from dotenv import load_dotenv
+from settings import LLM_MODEL, LLM_TEMPERATURE
 from ocr import extract_text_from_bytes   # <-- modular OCR import
 
 # ====================================================
@@ -105,9 +107,9 @@ Example:
 """
 
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=LLM_MODEL,
         messages=[{"role": "user", "content": prompt}],
-        temperature=0
+        temperature=LLM_TEMPERATURE
     )
 
     raw = completion.choices[0].message.content
@@ -158,8 +160,9 @@ Respond as a helpful chat assistant.
 """
 
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=LLM_MODEL,
         messages=[{"role": "user", "content": prompt}],
+        temperature=LLM_TEMPERATURE
     )
 
     reply = completion.choices[0].message.content
