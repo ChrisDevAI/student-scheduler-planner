@@ -1,89 +1,80 @@
-import { useState, useEffect } from "react"; 
-import UploadPanel from "./components/UploadPanel";
-import CourseSelector from "./components/CourseSelector";
-import ChatPanel from "./components/ChatPanel";
-import campusLogo from "./assets/campus.svg";
+// App.jsx
+
+import { useState, useEffect } from 'react'
+import UploadPanel from './components/UploadPanel'
+import CourseSelector from './components/CourseSelector'
+import ChatPanel from './components/ChatPanel'
+import AppHeader from './components/AppHeader'
 
 export default function App() {
-  const [ocrText, setOcrText] = useState("");
-  const [courseList, setCourseList] = useState([]);
-  const [selectedCourses, setSelectedCourses] = useState([]);
-  const [messages, setMessages] = useState([]);
+  const [ocrText, setOcrText] = useState('')
+  const [courseList, setCourseList] = useState([])
+  const [selectedCourses, setSelectedCourses] = useState([])
+  const [messages, setMessages] = useState([])
 
-  const [processingCourses, setProcessingCourses] = useState(false);
-  const [assistantTyping, setAssistantTyping] = useState(false);
+  const [processingCourses, setProcessingCourses] = useState(false)
+  const [assistantTyping, setAssistantTyping] = useState(false)
 
   function addAssistantMessage(text) {
-    setMessages(prev => [...prev, { sender: "assistant", text }]);
+    setMessages((prev) => [...prev, { sender: 'assistant', text }])
   }
 
   useEffect(() => {
-    if (!ocrText) return;
+    if (!ocrText) return
 
     async function extract() {
-      setProcessingCourses(true);
+      setProcessingCourses(true)
 
       try {
-        const res = await fetch("http://localhost:8000/extract-courses", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: ocrText })
-        });
+        const res = await fetch('http://localhost:8000/extract-courses', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: ocrText }),
+        })
 
-        const data = await res.json();
-        setCourseList(data.courses || []);
+        const data = await res.json()
+        setCourseList(data.courses || [])
       } catch (err) {
-        console.error("Extraction failed:", err);
+        console.error('Extraction failed:', err)
       }
 
-      setProcessingCourses(false);
+      setProcessingCourses(false)
     }
 
-    extract();
-  }, [ocrText]);
+    extract()
+  }, [ocrText])
 
   async function handleSendMessage(userMessage) {
-    if (!userMessage.trim()) return;
+    if (!userMessage.trim()) return
 
-    setMessages(prev => [...prev, { sender: "user", text: userMessage }]);
-
-    setAssistantTyping(true);
+    setMessages((prev) => [...prev, { sender: 'user', text: userMessage }])
+    setAssistantTyping(true)
 
     try {
-      const res = await fetch("http://localhost:8000/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('http://localhost:8000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: userMessage,
-          selected_courses: selectedCourses
-        })
-      });
+          selected_courses: selectedCourses,
+        }),
+      })
 
-      const data = await res.json();
+      const data = await res.json()
 
-      setAssistantTyping(false);
-
-      setMessages(prev => [...prev, { sender: "assistant", text: data.reply }]);
+      setAssistantTyping(false)
+      setMessages((prev) => [...prev, { sender: 'assistant', text: data.reply }])
     } catch (err) {
-      console.error("Chat error:", err);
-      setAssistantTyping(false);
+      console.error('Chat error:', err)
+      setAssistantTyping(false)
     }
   }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-
-      <div className="w-full bg-red-800 py-6 flex justify-center">
-        <div className="flex items-center gap-4">
-          <img src={campusLogo} alt="Campus" className="w-12 h-12" />
-          <h1 className="text-3xl font-bold text-white">
-            Student Schedule Planner
-          </h1>
-        </div>
-      </div>
+      <AppHeader />
 
       <div className="w-full mt-6 flex gap-8 px-4">
-
         <div className="flex-none w-[360px]">
           <UploadPanel onOCRComplete={setOcrText} />
         </div>
@@ -93,18 +84,17 @@ export default function App() {
             courses={courseList}
             processing={processingCourses}
             onCoursesSelected={(selected) => {
-              setSelectedCourses(selected);
+              setSelectedCourses(selected)
 
               if (selected.length > 0) {
-                const formatted = selected.join(", ");
+                const formatted = selected.join(', ')
                 addAssistantMessage(
                   `I’ve received your selected courses: ${formatted}.\nLet me know your scheduling preferences.`
-                );
+                )
               }
             }}
           />
         </div>
-
       </div>
 
       <div className="w-full mt-8 px-4">
@@ -114,7 +104,6 @@ export default function App() {
           assistantTyping={assistantTyping}
         />
       </div>
-
     </div>
-  );
+  )
 }
