@@ -1,47 +1,41 @@
-import { useState, useRef, useEffect } from "react";
+// ChatPanel.jsx
 
-export default function ChatPanel({ messages = [], onSendMessage, assistantTyping }) {
-  const [input, setInput] = useState("");
-  const scrollRef = useRef(null);
+import { useRef, useEffect } from 'react'
+
+export default function ChatPanel({ messages = [], assistantTyping }) {
+  const scrollRef = useRef(null)
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-  }, [messages, assistantTyping]);
-
-  function handleSend() {
-    if (!input.trim()) return;
-
-    onSendMessage(input);
-    setInput("");
-  }
+  }, [messages, assistantTyping])
 
   return (
-    <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-6">
-      
-      <div className="bg-red-800 text-white rounded-xl px-4 py-3">
-        <h2 className="text-xl font-semibold mb-4 text-white">
-          Chat with Assistant
-        </h2>
-      </div>  
+    <div className="bg-white border border-gray-300 rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-red-800 text-white px-4 py-3">
+        <h2 className="text-xl font-semibold">Schedule Results</h2>
+      </div>
 
       <div
         ref={scrollRef}
-        className="h-80 overflow-y-auto border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-4"
+        className="h-80 overflow-y-auto border-t border-gray-200 p-4 bg-gray-50 space-y-4"
       >
+        {messages.length === 0 && !assistantTyping && (
+          <p className="text-gray-600">
+            Your generated schedule and explanation will appear here after you select and confirm
+            your courses.
+          </p>
+        )}
+
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`flex w-full ${
-              msg.sender === "user" ? "justify-end" : "justify-start"
-            }`}
+            className={`flex w-full ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`px-4 py-2 rounded-lg max-w-xs whitespace-pre-wrap ${
-                msg.sender === "user"
-                  ? "bg-red-700 text-white"
-                  : "bg-gray-200 text-black"
+              className={`px-4 py-3 rounded-lg max-w-2xl whitespace-pre-wrap leading-relaxed ${
+                msg.sender === 'user' ? 'bg-red-700 text-white' : 'bg-gray-200 text-black'
               }`}
             >
               {msg.text}
@@ -52,7 +46,7 @@ export default function ChatPanel({ messages = [], onSendMessage, assistantTypin
         {assistantTyping && (
           <div className="flex justify-start">
             <div className="bg-gray-200 text-black px-4 py-2 rounded-lg max-w-xs flex items-center gap-2">
-              <span className="font-medium">Assistant is typing</span>
+              <span className="font-medium">Building schedule</span>
               <span className="typing-dots flex gap-1">
                 <span className="dot"></span>
                 <span className="dot"></span>
@@ -61,23 +55,6 @@ export default function ChatPanel({ messages = [], onSendMessage, assistantTypin
             </div>
           </div>
         )}
-      </div>
-
-      <div className="flex items-center gap-3 mt-4">
-        <input
-          className="flex-1 border border-gray-300 p-3 rounded-lg"
-          placeholder="Type your scheduling preferences..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
-
-        <button
-          onClick={handleSend}
-          className="bg-red-800 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition"
-        >
-          Send
-        </button>
       </div>
 
       <style>
@@ -95,9 +72,11 @@ export default function ChatPanel({ messages = [], onSendMessage, assistantTypin
           .dot:nth-child(1) {
             animation-delay: 0s;
           }
+
           .dot:nth-child(2) {
             animation-delay: 0.2s;
           }
+
           .dot:nth-child(3) {
             animation-delay: 0.4s;
           }
@@ -109,7 +88,6 @@ export default function ChatPanel({ messages = [], onSendMessage, assistantTypin
           }
         `}
       </style>
-
     </div>
-  );
+  )
 }

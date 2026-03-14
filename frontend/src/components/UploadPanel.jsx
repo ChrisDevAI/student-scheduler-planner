@@ -1,67 +1,68 @@
-import { useState } from "react";
+// UploadPanel.jsx
+
+import { useState } from 'react'
 
 export default function UploadPanel({ onOCRComplete }) {
-  const [preview, setPreview] = useState(null);
-  const [file, setFile] = useState(null);
-  const [fileInputKey, setFileInputKey] = useState(Date.now());
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [preview, setPreview] = useState(null)
+  const [file, setFile] = useState(null)
+  const [fileInputKey, setFileInputKey] = useState(Date.now())
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   function handleFileChange(e) {
-    const selected = e.target.files[0];
+    const selected = e.target.files[0]
     if (selected) {
-      setFile(selected);
-      setPreview(URL.createObjectURL(selected));
-      setError("");
+      setFile(selected)
+      setPreview(URL.createObjectURL(selected))
+      setError('')
     }
   }
 
   function clearFile() {
-    setPreview(null);
-    setFile(null);
-    setFileInputKey(Date.now());
-    setError("");
+    setPreview(null)
+    setFile(null)
+    setFileInputKey(Date.now())
+    setError('')
   }
 
   async function handleUpload() {
     if (!file) {
-      setError("Please choose a file first.");
-      return;
+      setError('Please choose a file first.')
+      return
     }
 
-    setLoading(true);
-    setError("");
+    setLoading(true)
+    setError('')
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
+      const formData = new FormData()
+      formData.append('file', file)
 
-      const res = await fetch("http://localhost:8000/ocr-upload", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/ocr-upload', {
+        method: 'POST',
         body: formData,
-      });
+      })
 
       if (!res.ok) {
-        throw new Error("OCR upload failed.");
+        throw new Error('OCR upload failed.')
       }
 
-      const data = await res.json();
+      const data = await res.json()
       // The backend will return: { text: "...extracted text..." }
 
       if (onOCRComplete) {
-        onOCRComplete(data.text);
+        onOCRComplete(data.text)
       }
     } catch (err) {
-      console.error(err);
-      setError("Failed to upload or process the image.");
+      console.error(err)
+      setError('Failed to upload or process the image.')
     }
 
-    setLoading(false);
+    setLoading(false)
   }
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-      
       {/* Mini Header */}
       <div className="bg-red-800 text-white px-4 py-3">
         <h2 className="text-lg font-semibold">Upload Course Image</h2>
@@ -69,10 +70,8 @@ export default function UploadPanel({ onOCRComplete }) {
 
       {/* Card Body */}
       <div className="p-6 flex items-start gap-4">
-
         {/* Left Column: Choose + Upload */}
         <div className="flex flex-col gap-3 w-1/2">
-
           {/* Hidden file input */}
           <input
             key={fileInputKey}
@@ -85,7 +84,7 @@ export default function UploadPanel({ onOCRComplete }) {
 
           {/* Choose File */}
           <button
-            onClick={() => document.getElementById("fileInput").click()}
+            onClick={() => document.getElementById('fileInput').click()}
             className="bg-gray-300 text-black font-medium px-4 py-2 shadow hover:bg-gray-400"
           >
             Choose File
@@ -95,16 +94,14 @@ export default function UploadPanel({ onOCRComplete }) {
           <button
             onClick={handleUpload}
             disabled={loading}
-            className={`px-4 py-2 font-medium shadow 
-              ${loading ? "bg-gray-400" : "bg-gray-300 hover:bg-gray-400"} 
+            className={`px-4 py-2 font-medium shadow
+              ${loading ? 'bg-gray-400' : 'bg-gray-300 hover:bg-gray-400'}
               text-black`}
           >
-            {loading ? "Processing..." : "Upload"}
+            {loading ? 'Processing...' : 'Upload'}
           </button>
 
-          {error && (
-            <p className="text-sm text-red-600">{error}</p>
-          )}
+          {error && <p className="text-sm text-red-600">{error}</p>}
         </div>
 
         {/* Right Column: Image Preview */}
@@ -130,5 +127,5 @@ export default function UploadPanel({ onOCRComplete }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

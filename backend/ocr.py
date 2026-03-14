@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 # Ensure environment variables are loaded
 load_dotenv()
 
+
 # Load Windows Tesseract path
 pytesseract.pytesseract.tesseract_cmd = os.getenv("TESSERACT_PATH")
 

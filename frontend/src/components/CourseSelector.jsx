@@ -1,39 +1,37 @@
-import { useState } from "react";
+// CourseSelector.jsx
+
+import { useState } from 'react'
 
 export default function CourseSelector({ courses = [], onCoursesSelected, processing }) {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([])
 
-  const uniqueCourses = [...new Set(courses)];
+  const uniqueCourses = [...new Set(courses)]
 
   function toggleCourse(code) {
-    let updated;
+    let updated
 
     if (selected.includes(code)) {
-      updated = selected.filter((c) => c !== code);
+      updated = selected.filter((c) => c !== code)
     } else {
-      if (selected.length >= 5) return;
-      updated = [...selected, code];
+      if (selected.length >= 5) return
+      updated = [...selected, code]
     }
 
-    setSelected(updated);
+    setSelected(updated)
   }
 
   function sendToApp() {
-    if (selected.length === 0) return;
-    onCoursesSelected(selected);
+    if (selected.length === 0) return
+    onCoursesSelected(selected)
   }
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-
       <div className="bg-red-800 text-white px-5 py-3">
-        <h2 className="text-lg font-semibold tracking-wide">
-          Select Courses (max 5)
-        </h2>
+        <h2 className="text-lg font-semibold tracking-wide">Select Courses (max 5)</h2>
       </div>
 
       <div className="p-6 max-h-80 overflow-y-auto">
-
         {processing ? (
           <p className="text-gray-600 font-medium">Processing…</p>
         ) : uniqueCourses.length === 0 ? (
@@ -58,7 +56,6 @@ export default function CourseSelector({ courses = [], onCoursesSelected, proces
             ))}
           </div>
         )}
-
       </div>
 
       <div className="p-4 border-t bg-gray-50">
@@ -69,7 +66,6 @@ export default function CourseSelector({ courses = [], onCoursesSelected, proces
           Confirm Selected Courses
         </button>
       </div>
-
     </div>
-  );
+  )
 }
