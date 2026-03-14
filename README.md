@@ -56,6 +56,26 @@ frontend/public/test-image.jpg
 - [License](#license)
 - [Author](#author)
 
+The Student Schedule Planner is an MVP full-stack application that demonstrates a professional AI-assisted pipeline with deterministic business logic.
+
+The system works as follows:
+
+A student uploads an image of a course list
+
+OCR extracts raw text from the image
+
+Deterministic pattern matching extracts valid course codes
+
+The student selects which courses they want to take
+
+A deterministic scheduling algorithm builds a conflict-free schedule using a synthetic CSV course database
+
+An LLM optionally explains the final schedule in plain English
+
+If the LLM is unavailable, the system falls back gracefully and still returns the completed schedule
+
+This architecture intentionally reserves the LLM for explanation only, while keeping extraction, validation, and schedule generation deterministic and auditable.
+
 ---
 
 ## Features
@@ -64,24 +84,30 @@ frontend/public/test-image.jpg
 - Upload JPG/PNG course list images  
 - FastAPI backend receives file bytes  
 - Tesseract OCR processes text (`ocr.py`)  
-- Clean, modular OCR pipeline  
+- Clean, modular OCR pipeline
 
-### LLM Assistant
-- gpt-4o-mini  
-- Validates course codes  
-- Deduplicates and normalizes results  
+### Deterministic Course Extraction
+- Extracts course codes using regex pattern matching
+- Filters extracted codes against the synthetic course catalog
+- Deduplicates and normalizes valid course codes
+- No LLM dependency for course-code extraction
 
 ### Course Selection UI
 - Select up to 5 courses  
-- Responsive Tailwind interface  
+- Responsive React + Tailwind UI 
 - Loading + confirmation states  
-- Clean React component structure  
+- Clean component-based frontend structure
 
-### AI Chat Assistant
-- Built-in chat window  
-- Assistant typing animation  
-- CSV-based section matching  
-- Local backend required for full functionality
+### Deterministic Schedule Generation
+- Uses a synthetic CSV dataset of course sections
+- Selects one section per chosen course
+- Detects and avoids time conflicts
+- Returns the first valid conflict-free schedule
+
+### LLM Explanation Layer
+- The final schedule can be explained in plain English by an LLM
+- The LLM does not build the schedule
+- If the explanation service is unavailable, the app falls back and still returns the schedule successfully
  
 [⬆️ Back to Overview](#overview)
 
@@ -99,7 +125,22 @@ frontend/public/test-image.jpg
 - Python  
 - FastAPI  
 - Tesseract OCR  
-- OpenAI gpt-4o-mini  
+- OpenAI API
+- Deterministic scheduling engine
+- CSV-based synthetic course database
+
+### Architecture
+Image Upload
+   ↓
+OCR (Tesseract)
+   ↓
+Deterministic Course Code Extraction
+   ↓
+Student Course Selection
+   ↓
+Deterministic Conflict-Free Schedule Generation
+   ↓
+LLM Explanation Layer
 
 [⬆️ Back to Overview](#overview)
 
@@ -123,6 +164,18 @@ frontend/public/test-image.jpg
 [⬆️ Back to Overview](#overview)
 
 ---
+
+## Why This Project Matters
+This project demonstrates more than just full-stack integration.
+It shows the ability to:
+- design an end-to-end pipeline
+- separate deterministic logic from LLM responsibilities
+- build resilient backend workflows
+- recover gracefully from external service failures
+- structure an MVP around correctness, maintainability, and explainability
+
+
+--- 
 
 ## License
 MIT License
