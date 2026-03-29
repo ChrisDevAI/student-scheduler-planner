@@ -1,39 +1,159 @@
-# Student Schedule Planner   (MVP Release)
+# Student Schedule Planner
 
 ![Hero Screenshot](screenshots/hero.jpg)
 
-An AI-powered system that converts a photo of your course list into a personalized class schedule using computer vision, AI, and database section matching.
+Student Schedule Planner is an AI-assisted scheduling application that converts a course-list image into a conflict-free class schedule through a structured pipeline built around OCR, deterministic extraction, and rule-based schedule generation.
 
+The system uses computer vision and OCR to read course information from an uploaded image, validates course codes through deterministic matching, generates a schedule from a synthetic course catalog, and uses an LLM only to explain the final result in plain English.
 
-## 🔴 Live Demo (Frontend Only)  - MVP Release
+---
+
+## Live Demo
+
+**Frontend-only demo:**  
 https://student-schedule-planner-75ce2.web.app/
 
 > Backend functionality requires running locally.
 
 ---
 
-## Installation (Quick Start)
+## Why This Project
 
-Python version: 3.10.x
+Building a class schedule from a course list can be slow, repetitive, and error-prone. Students often have to manually read a course guide, identify valid classes, compare sections, and avoid time conflicts by hand.
 
-Clone the repo:
+This project was designed to turn that workflow into a structured software pipeline:
+
+- OCR extracts raw text from an uploaded image
+- Deterministic pattern matching identifies valid course codes
+- The user selects the courses they want
+- A rule-based scheduling engine builds a conflict-free schedule
+- An LLM explains the final schedule without controlling the scheduling logic
+
+This architecture keeps the system reliable and auditable by reserving the LLM for explanation only, while extraction, validation, and schedule generation remain deterministic.
+
+---
+
+## Features
+
+### OCR and Image Processing
+- Upload JPG and PNG course-list images
+- Extract raw text through a modular OCR pipeline
+- Process file uploads through a FastAPI backend
+- Use Tesseract OCR for document-to-text conversion
+
+### Deterministic Course Extraction
+- Extract course codes using regex-based pattern matching
+- Filter extracted values against the synthetic course catalog
+- Normalize and deduplicate valid course codes
+- Avoid LLM dependence for course-code extraction
+
+### Course Selection Workflow
+- Let users select the courses they want to take
+- Support responsive interaction through a React and Tailwind UI
+- Provide loading and confirmation states
+- Keep the frontend component-based and modular
+
+### Schedule Generation
+- Use a synthetic CSV dataset of course sections
+- Select one valid section per chosen course
+- Detect and avoid time conflicts
+- Return the first valid conflict-free schedule
+
+### Explanation Layer
+- Generate a plain-English explanation of the final schedule
+- Keep the LLM separate from extraction and scheduling
+- Fall back gracefully if the explanation service is unavailable
+- Return the completed schedule even when the LLM is unavailable
+
+---
+
+## Tech Stack
+
+### Frontend
+- React
+- Vite
+- Tailwind CSS
+
+### Backend
+- Python
+- FastAPI
+- Tesseract OCR
+- OpenAI API
+- Deterministic scheduling engine
+- CSV-based synthetic course database
+
+---
+
+## Architecture Overview
+
+The application follows a structured pipeline:
+
+1. A student uploads an image of a course list
+2. OCR extracts raw text from the image
+3. Deterministic pattern matching identifies valid course codes
+4. The student selects which courses to include
+5. A deterministic scheduling engine builds a conflict-free schedule from a synthetic CSV course database
+6. An LLM optionally explains the final schedule in plain English
+7. If the LLM is unavailable, the system still returns the completed schedule through a fallback path
+
+This design reflects an important engineering decision: use deterministic logic where correctness, control, and auditability matter most, and use the LLM only where natural-language flexibility adds value.
+
+---
+
+## Iteration and Development Journey
+
+This project evolved from an early AI-assisted prototype into a more disciplined system with clearer architectural boundaries.
+
+### Early Prototype
+The initial version helped validate the user workflow: turning a course-list image into a usable schedule through an AI-assisted pipeline.
+
+![Early Prototype](screenshots/story1.jpg)
+
+### OCR and Extraction Progress
+The next phase focused on getting OCR and extraction working reliably enough to identify course information from uploaded images.
+
+![OCR Working](screenshots/story2.jpg)
+
+### Early Scheduling and LLM Output
+An earlier version used the LLM more directly in the scheduling process. That helped prototype the user experience, but it also exposed the need for stronger control over correctness and repeatability.
+
+![Schedule Output](screenshots/story3.jpg)
+
+### Refined Final Direction
+The final architecture moved extraction, validation, and schedule generation into deterministic logic, while reserving the LLM for plain-English explanation only. This improved reliability, debugging clarity, and overall engineering quality.
+
+![Pre-Final UI](screenshots/story4.jpg)
+
+The result is a stronger full-stack AI application with better system boundaries, more defensible design choices, and a clearer production-minded workflow.
+
+---
+
+## Installation
+
+**Python version:** 3.10.x
+
+### Clone the repository
 
 ```bash
 git clone https://github.com/ChrisDevAI/student-schedule-planner.git
 cd student-schedule-planner
 ```
 
-### Backend
+---
+
+## Backend Setup
 
 ```bash
 cd backend
 py 3.10 -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-### Frontend
+---
+
+## Frontend Setup
 
 ```bash
 cd frontend
@@ -43,129 +163,32 @@ npm run dev
 
 A sample test image is located at:
 
-```
+```text
 frontend/public/test-image.jpg
 ```
 
 ---
 
-## Overview
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Development Journey](#development-journey)
-- [License](#license)
-- [Author](#author)
+## Project Status
 
-The Student Schedule Planner is an MVP full-stack application that demonstrates a professional AI-assisted pipeline with deterministic business logic.
+This project is a functional MVP that demonstrates a structured AI-assisted workflow built on deterministic business logic. Its core strength is the architectural decision to keep extraction, validation, and schedule generation rule-based, while using the LLM only for explanation.
 
-The system works as follows:
-
-A student uploads an image of a course list
-
-OCR extracts raw text from the image
-
-Deterministic pattern matching extracts valid course codes
-
-The student selects which courses they want to take
-
-A deterministic scheduling algorithm builds a conflict-free schedule using a synthetic CSV course database
-
-An LLM optionally explains the final schedule in plain English
-
-If the LLM is unavailable, the system falls back gracefully and still returns the completed schedule
-
-This architecture intentionally reserves the LLM for explanation only, while keeping extraction, validation, and schedule generation deterministic and auditable.
-
----
-
-## Features
-
-### Image Upload + OCR
-- Upload JPG/PNG course list images  
-- FastAPI backend receives file bytes  
-- Tesseract OCR processes text (`ocr.py`)  
-- Clean, modular OCR pipeline
-
-### Deterministic Course Extraction
-- Extracts course codes using regex pattern matching
-- Filters extracted codes against the synthetic course catalog
-- Deduplicates and normalizes valid course codes
-- No LLM dependency for course-code extraction
-
-### Course Selection UI
-- Select up to 5 courses  
-- Responsive React + Tailwind UI 
-- Loading + confirmation states  
-- Clean component-based frontend structure
-
-### Deterministic Schedule Generation
-- Uses a synthetic CSV dataset of course sections
-- Selects one section per chosen course
-- Detects and avoids time conflicts
-- Returns the first valid conflict-free schedule
-
-### LLM Explanation Layer
-- The final schedule can be explained in plain English by an LLM
-- The LLM does not build the schedule
-- If the explanation service is unavailable, the app falls back and still returns the schedule successfully
- 
-[⬆️ Back to Overview](#overview)
-
-
----
-
-## Tech Stack
-
-### Frontend  
-- React  
-- Vite  
-- TailwindCSS  
-
-### Backend  
-- Python  
-- FastAPI  
-- Tesseract OCR  
-- OpenAI API
-- Deterministic scheduling engine
-- CSV-based synthetic course database
-
-
-[⬆️ Back to Overview](#overview)
-
----
-
-## Development Journey
-
-### Story 1 — Early Prototype  
-![Early Prototype](screenshots/story1.jpg)
-
-### Story 2 — OCR + Extraction Working  
-![OCR Working](screenshots/story2.jpg)
-
-### Story 3 — First LLM Schedule Output  
-![Schedule Output](screenshots/story3.jpg)
-
-### Story 4 — Pre-Final UI  
-![Pre-Final UI](screenshots/story4.jpg)
-
-
-[⬆️ Back to Overview](#overview)
+The project can be expanded further, but the current version already demonstrates practical AI integration, full-stack delivery, and sound engineering judgment.
 
 ---
 
 ## Why This Project Matters
+
 This project was designed to solve a real student workflow problem, not just serve as a technical demo.
 
-Building a class schedule from a course list can be slow, repetitive, and frustrating. Students often have to read course guides manually, identify valid courses, compare sections, and avoid time conflicts by hand. This project turns that process into a structured pipeline: OCR extracts text from an uploaded image, deterministic logic identifies valid course codes, and a rule-based scheduling engine builds a conflict-free schedule from a course catalog.
+It also demonstrates practical engineering judgment. Instead of relying on an LLM for tasks that require correctness and control, the system uses deterministic logic for extraction, validation, and schedule construction, while reserving the LLM only for plain-English explanation. That makes the application more reliable, easier to debug, and better aligned with real-world software design.
 
-This project also demonstrates practical engineering judgment. Instead of relying on an LLM for tasks that require correctness and control, the system uses deterministic logic for extraction, validation, and schedule construction, while reserving the LLM only for plain-English explanation. That makes the application more reliable, easier to debug, and more aligned with real-world software design.
+The idea also has broader institutional potential and could be expanded into a more capable academic scheduling tool in the future.
 
-It also reflects the ability to identify and prototype a meaningful real-world use case: using AI and software engineering to reduce friction in a process students genuinely deal with. The underlying idea has real institutional value and could be expanded into a broader academic scheduling tool in the future.
-
-
---- 
+---
 
 ## License
+
 MIT License
 
 ---
@@ -173,12 +196,11 @@ MIT License
 ## Author
 
 **Christopher Mena**  
-AI/ML Engineer  
-GitHub: https://github.com/ChrisDevAI  
-Website: https://ChrisAI.dev  
-LinkedIn: https://linkedin.com/in/ChrisDevAI
+Applied AI / ML Engineering Student  
 
-
+- GitHub: https://github.com/ChrisDevAI  
+- Website: https://chrisai.dev  
+- LinkedIn: https://linkedin.com/in/ChrisDevAI
 
 
 
